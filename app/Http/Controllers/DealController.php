@@ -30,6 +30,7 @@ class DealController
         //Application get query
         $sql = "SELECT email FROM applications WHERE id IN (SELECT application_id FROM deals WHERE id = '$dealId')";
         $stmt = $this->conn->prepare($sql);
+
         if ($stmt->execute()) {
             $email = join(',', $stmt->fetch(PDO::FETCH_ASSOC));
             $this->sendNotification($email);

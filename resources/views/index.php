@@ -76,7 +76,9 @@ if (isset($_GET['id'])) {
                 <td><?php echo $deal['partner']; ?></td>
                 <td><?php echo $deal['status']; ?></td>
                 <td>
-                    <a href='#' onclick='setOfferStatus(<?php echo json_encode($deal['id']); ?>);' class='btn btn-danger'>Offer</a>
+                    <?php if($deal['status'] !== 'offer'): ?>
+                        <a href='#' onclick='setOfferStatus(<?php echo json_encode($deal['id']); ?>);' class='btn btn-danger'>Offer</a>
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -37,21 +37,22 @@ class ApplicationController
         $stmt->bindValue(":email", $email, PDO::PARAM_STR);
         $stmt->bindValue(":money_amount", $moneyAmount, PDO::PARAM_INT);
 
-        if (!$stmt->execute() || !$this->createDeal($moneyAmount)) {
+        if (!$stmt->execute()) {
             $this->logger->debug(join(', ', $stmt->errorInfo()));
             echo "<div class='alert alert-danger'>Unable to send application.</div>";
             return;
         }
 
+        $this->createDeal($moneyAmount);
         $this->sendNotification();
         echo "<div class='alert alert-success'>Application was sent.</div>";
     }
 
-    private function createDeal(int $moneyAmount): bool
+    private function createDeal(int $moneyAmount): void
     {
         $partnerClass = 'Partner' . ($moneyAmount > 5000 ? 'A' : 'B');
         $partner = new $partnerClass($this->conn);
-        return $partner->createDeal($this->conn->lastInsertId());
+        $partner->createDeal($this->conn->lastInsertId());
     }
 
     private function sendNotification(): void
