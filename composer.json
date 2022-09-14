@@ -1,5 +1,8 @@
 {
-    "require": {
-        "rakit/validation": "^0.19.0"
-    }
+  "require": {
+    "phpmailer/phpmailer": "^6.6",
+    "league/event": "^3.0",
+    "ext-pdo": "*",
+    "psr/log": "^1.1"
+  }
 }

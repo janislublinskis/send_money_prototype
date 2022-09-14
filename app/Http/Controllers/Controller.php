@@ -2,14 +2,14 @@
 
 class Controller
 {
-    public function getRoute(string $page, string $action): string
+    public function getRoute(string $action): string
     {
-        $path = 'resources/views/' .$page.'/' . $action . '.php';
+        $path = 'resources/views/' . $action . '.php';
 
         if (file_exists($path)) {
             return $path;
         }
 
-        return 'resources/views/properties/index.php';
+        return 'resources/views/create.php';
     }
 }

@@ -1,9 +1,13 @@
 <?php
 
-include __DIR__ . '/config/app.php';
-include __DIR__ . '/app/Http/Controllers/Controller.php';
-include __DIR__ . '/app/Http/Controllers/PropertyController.php';
-include __DIR__ . '/app/Models/Database.php';
+use League\Event\EventDispatcher;
+
+include_once __DIR__ . '/config/app.php';
+include_once __DIR__ . '/app/Http/Controllers/Controller.php';
+include_once __DIR__ . '/app/Http/Controllers/ApplicationController.php';
+include_once __DIR__ . '/app/Http/Controllers/DealController.php';
+include_once __DIR__ . '/app/Providers/EventServiceProvider.php';
+include_once __DIR__ . '/app/Models/Database.php';
 
 if (true === APP_DEBUG)
 {
@@ -12,14 +16,16 @@ if (true === APP_DEBUG)
 
 $database = new Database(DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
 $connection = $database->getConnection();
-$page = $_GET['page'] ?? 'properties';
-$action = $_GET['action'] ?? 'index';
+$action = $_GET['action'] ?? 'create';
 
 $controller = new Controller();
-$crudController = new PropertyController($database);
+$crudController = new ApplicationController($database);
+$dealController = new DealController($database);
+$dispatcher = new EventDispatcher();
+$dispatcher->subscribeListenersFrom(new EventServiceProvider());
 
-include __DIR__ . '/resources/views/_header.php';
+include_once __DIR__ . '/resources/views/_header.php';
 
-include $controller->getRoute($page, $action);
+include $controller->getRoute($action);
 
-include __DIR__ . '/resources/views/_footer.php';
+include_once __DIR__ . '/resources/views/_footer.php';

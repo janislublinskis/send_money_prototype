@@ -2,10 +2,17 @@
 
 class Database
 {
-    private string $name;
-    private string $host;
-    private string $user;
-    private string $password;
+    /* @property string $name */
+    private $name;
+
+    /* @property string $host */
+    private $host;
+
+    /* @property string $user */
+    private $user;
+
+    /* @property string $password */
+    private $password;
 
     public function __construct(string $host, string $name, string $user, string $password)
     {
@@ -25,12 +32,3 @@ class Database
         ]);
     }
 }
-
-
-
-
-
-
-
-
-
